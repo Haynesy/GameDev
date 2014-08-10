@@ -45,32 +45,41 @@ public class App extends Canvas implements Runnable {
         double nsPerFrame = 1000000000.0/ 60.0;
         long currentFrameTime = System.currentTimeMillis();
         long lastFrameTime = System.nanoTime();
+        double unprocessed = 0;
 
         while(running){
 
             long now = System.nanoTime();
-            double unprocessed = (now - lastFrameTime) / nsPerFrame;
+            unprocessed += (now - lastFrameTime) / nsPerFrame;
             lastFrameTime = now;
 
-            //Print.line(""+ unprocessed);
-
-            while(unprocessed > 1)
+            while(unprocessed >= 1) {
                 unprocessed -= 1;
+            }
 
             tick();
             render();
 
-
             frames++;
 
-            if(System.currentTimeMillis() + 1000 >= currentFrameTime){
+            if(System.currentTimeMillis() - currentFrameTime >= 1000){
 
                 Print.line("fps: "+ frames);
                 frames = 0;
                 currentFrameTime += 1000;
             }
+
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
+        close();
+    }
+
+    private void close() {
         try {
             System.exit(0);
             thread.join();
@@ -80,7 +89,7 @@ public class App extends Canvas implements Runnable {
     }
 
     private void init() {
-        setFocusable(true);
+        requestFocus();
 
         if(getBufferStrategy() == null){
             createBufferStrategy(3);
@@ -96,7 +105,9 @@ public class App extends Canvas implements Runnable {
         for(int i = 0; i < screen.pixels.length; i++)
             screen.pixels[i] = random.nextInt();
 
-        graphics.clearRect(0, 0, FINAL_WIDTH, FINAL_HEIGHT);
+//        graphics.setColor(Color.BLACK);
+//        graphics.clearRect(0, 0, FINAL_WIDTH, FINAL_HEIGHT);
+
         graphics.drawImage(screen.image, 0, 0, FINAL_WIDTH, FINAL_HEIGHT, null);
 
         graphics.dispose();
