@@ -91,9 +91,8 @@ public class App extends Canvas implements Runnable {
     private void init() {
         requestFocus();
 
-        if(getBufferStrategy() == null){
+        if(getBufferStrategy() == null)
             createBufferStrategy(3);
-        }
 
     }
 
