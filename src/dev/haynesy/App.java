@@ -132,13 +132,15 @@ public class App extends Canvas implements Runnable {
 
         App app = new App();
         JFrame frame = new JFrame();
+
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH * SCALE, HEIGHT * SCALE);
-
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
         frame.add(app);
         frame.setVisible(true);
-        frame.pack();
 
+        frame.pack();
         thread = new Thread(app, "App");
         thread.start();
 
