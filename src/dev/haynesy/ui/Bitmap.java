@@ -30,7 +30,7 @@ public class Bitmap {
     public Bitmap(String filename) {
 
         try {
-            BufferedImage tempImage = ImageIO.read(new File(filename));
+            BufferedImage tempImage = ImageIO.read(new File("./resources/" + filename));
 
             this.width = tempImage.getWidth();
             this.height = tempImage.getHeight();
@@ -63,30 +63,22 @@ public class Bitmap {
 
         for(int y = startY; y < endY; y++) {
 
-
-
             for (int x = startX; x < endX; x++) {
 
-                int target = y * width + x;
+                int target = (y - offsetY) * bitmap.width + (x - offsetX);
 
-                int color = bitmap.pixels[y * bitmap.width + x];
-                pixels[target] = color;
-            }
-        }
-    }
-
-    /*
-
-        int target = x * bitmap.width + y;
-
-                if (target >= bitmap.pixels.length)
+                if(target >= bitmap.pixels.length)
                     continue;
 
                 int color = bitmap.pixels[target];
+                pixels[y * width + x] = color;
+            }
 
-                if (target < pixels.length)
-                    pixels[x * width + y] = color;
-     */
+            System.out.print("\n");
+        }
+
+        System.out.print("\n\n");
+    }
 
     public void fill(int color) {
         Arrays.fill(pixels, color);

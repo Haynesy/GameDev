@@ -14,6 +14,13 @@ public class FirstPerson extends App {
     private Bitmap test;
 
     public FirstPerson(){
+        width = 1440;
+        height = 900;
+        scale = 1;
+
+        finalWidth = width * scale;
+        finalHeight = height * scale;
+
         map = new Map(10, 10);
         player = new Player(1, 1, 1);
         camera = new Camera();

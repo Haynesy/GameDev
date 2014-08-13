@@ -14,11 +14,11 @@ import java.util.Random;
  */
 public class App extends Canvas implements Runnable {
 
-    public static int WIDTH = 200;
-    public static int HEIGHT = 100;
-    public static int SCALE = 4;
-    public static int FINAL_WIDTH = WIDTH * SCALE;
-    public static int FINAL_HEIGHT = HEIGHT * SCALE;
+    public int width;
+    public int height;
+    public int scale;
+    public int finalWidth;
+    public int finalHeight;
 
     private static Thread thread;
     private final InputHandler inputHandler;
@@ -27,14 +27,24 @@ public class App extends Canvas implements Runnable {
     protected Random random;
 
     public App(){
+
+        width = 200;
+        height = 100;
+        scale = 4;
+
+        finalWidth = width * scale;
+        finalHeight = height * scale;
+
         inputHandler = new InputHandler();
-        screen = new Bitmap(WIDTH, HEIGHT);
+        screen = new Bitmap(width, height);
         random = new Random();
 
         addMouseListener(inputHandler);
         addMouseMotionListener(inputHandler);
         addKeyListener(inputHandler);
         running = true;
+
+
     }
 
     @Override
@@ -102,9 +112,11 @@ public class App extends Canvas implements Runnable {
         BufferStrategy stratedgy = getBufferStrategy();
         Graphics graphics = stratedgy.getDrawGraphics();
 
+        graphics.clearRect(0, 0, finalWidth, finalHeight);
+
         updateScreen();
 
-        graphics.drawImage(screen.image, 0, 0, FINAL_WIDTH, FINAL_HEIGHT, null);
+        graphics.drawImage(screen.image, 0, 0, finalWidth, finalHeight, null);
 
         graphics.dispose();
         stratedgy.show();
@@ -139,7 +151,7 @@ public class App extends Canvas implements Runnable {
         JFrame frame = new JFrame();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH * SCALE, HEIGHT * SCALE);
+        frame.setSize(app.finalWidth, app.finalHeight);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.add(app);
