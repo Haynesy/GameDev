@@ -57,6 +57,7 @@ public class App extends Canvas implements Runnable {
                 unprocessed -= 1;
             }
 
+            updateInput();
             tick();
             renderFrame();
 
@@ -115,10 +116,14 @@ public class App extends Canvas implements Runnable {
             screen.pixels[i] = random.nextInt();
     }
 
-    private void tick() {
+    private void updateInput(){
         if(inputHandler.closed) {
             running = false;
         }
+    }
+
+    protected void tick() {
+
     }
 
     public static void main(String[] args){
