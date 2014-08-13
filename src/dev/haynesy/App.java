@@ -22,9 +22,9 @@ public class App extends Canvas implements Runnable {
 
     private static Thread thread;
     private final InputHandler inputHandler;
-    private final Bitmap screen;
+    protected final Bitmap screen;
     private boolean running;
-    private Random random;
+    protected Random random;
 
     public App(){
         inputHandler = new InputHandler();
@@ -58,7 +58,7 @@ public class App extends Canvas implements Runnable {
             }
 
             tick();
-            render();
+            renderFrame();
 
             frames++;
 
@@ -96,22 +96,23 @@ public class App extends Canvas implements Runnable {
 
     }
 
-    private void render() {
+    private void renderFrame() {
 
         BufferStrategy stratedgy = getBufferStrategy();
         Graphics graphics = stratedgy.getDrawGraphics();
 
-        for(int i = 0; i < screen.pixels.length; i++)
-            screen.pixels[i] = random.nextInt();
-
-//        graphics.setColor(Color.BLACK);
-//        graphics.clearRect(0, 0, FINAL_WIDTH, FINAL_HEIGHT);
+        updateScreen();
 
         graphics.drawImage(screen.image, 0, 0, FINAL_WIDTH, FINAL_HEIGHT, null);
 
         graphics.dispose();
         stratedgy.show();
 
+    }
+
+    protected void updateScreen() {
+        for(int i = 0; i < screen.pixels.length; i++)
+            screen.pixels[i] = random.nextInt();
     }
 
     private void tick() {
@@ -123,14 +124,13 @@ public class App extends Canvas implements Runnable {
     public static void main(String[] args){
         Print.line("Starting...");
 
-        App.start();
+        App.start(new App());
 
         Print.line("Done!");
     }
 
-    private static void start() {
+    protected static void start(App app) {
 
-        App app = new App();
         JFrame frame = new JFrame();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
