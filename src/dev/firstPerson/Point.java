@@ -5,6 +5,6 @@ package dev.firstPerson;
  */
 public class Point {
 
-    float x, y;
+    public float x, y;
     public float distance;
 }

@@ -14,6 +14,7 @@ public class FirstPerson extends App {
     private Bitmap test;
 
     public FirstPerson(){
+
         width = 1440;
         height = 900;
         scale = 1;

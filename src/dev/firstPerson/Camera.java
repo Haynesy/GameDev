@@ -26,7 +26,7 @@ public class Camera {
 
     }
 
-    private void drawSky(int direction, Bitmap skybox, Bitmap light) {
+    private void drawSky(float direction, Bitmap skybox, Bitmap light) {
 
     }
 }

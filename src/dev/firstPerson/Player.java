@@ -7,11 +7,11 @@ import dev.haynesy.ui.Bitmap;
  */
 public class Player {
 
-    public int x, y, direction;
+    public float x, y, direction;
     public Bitmap weapon;
     public int paces;
 
-    public Player(int x, int y, int direction){
+    public Player(float x, float y, float direction){
 
         this.x = x;
         this.y = y;
