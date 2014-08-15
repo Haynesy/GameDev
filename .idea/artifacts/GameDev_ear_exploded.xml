@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="exploded-ear" name="GameDev:ear exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/GameDev_ear_exploded</output-path>
-    <root id="root">
-      <element id="javaee-facet-resources" facet="GameDev/javaeeApplication/javaEEApplication" />
-    </root>
-  </artifact>
-</component>
