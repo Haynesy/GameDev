@@ -7,24 +7,23 @@ import dev.haynesy.ui.Bitmap;
  */
 public class Player {
 
-    public float x, y, direction;
-    public Bitmap weapon;
-    public int paces;
+    public float x, y;
 
-    public Player(float x, float y, float direction){
+    public Player(float x, float y, int width, int height){
 
         this.x = x;
         this.y = y;
-        this.direction = direction;
-        weapon = new Bitmap("weapon.png");
-        paces = 0;
+        Bitmap player = new Bitmap(width, height);
+        //player.circle(0, 0, (int) (width / 2), 0xff0000ff);
     }
 
-    public void walk(int distance, Map map){
+    public void draw(MiniMap miniMap){
 
-    }
+        /*
+        x pos on minimap
+        y pos on minimap
+        draw a circle for the player
 
-    public void update() {
-
+         */
     }
 }

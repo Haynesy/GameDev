@@ -49,12 +49,12 @@ public class Bitmap {
         return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     }
 
-    public void render(Bitmap bitmap, int offsetX, int offsetY) {
+    public void render(Bitmap source, int offsetX, int offsetY) {
         int startX = offsetX;
         int startY = offsetY;
 
-        int endX = bitmap.width + offsetX;
-        int endY = bitmap.height + offsetY;
+        int endX = source.width + offsetX;
+        int endY = source.height + offsetY;
 
         if(startX < 0) startX = 0;
         if(startY < 0) startY = 0;
@@ -65,23 +65,36 @@ public class Bitmap {
 
             for (int x = startX; x < endX; x++) {
 
-                int target = (y - offsetY) * bitmap.width + (x - offsetX);
+                int target = (y - offsetY) * source.width + (x - offsetX);
 
-                if(target >= bitmap.pixels.length)
+                if(target >= source.pixels.length)
                     continue;
 
-                int color = bitmap.pixels[target];
+                int color = source.pixels[target];
                 pixels[y * width + x] = color;
             }
-
-            System.out.print("\n");
         }
-
-        System.out.print("\n\n");
     }
 
     public void fill(int color) {
         Arrays.fill(pixels, color);
+    }
+
+    public void circle(int x, int y, int r, int color){
+
+        double i, angle, x1, y1;
+
+        for(i = 0; i < 360; i += 0.1)
+        {
+            angle = i;
+            x1 = r * Math.cos(angle * Math.PI / 180);
+            y1 = r * Math.sin(angle * Math.PI / 180);
+
+            int target = (int) ((y + y1) * height + x + x1);
+            pixels[target] = color;
+
+            //putpixel(x + x1, y + y1, color);
+        }
     }
 
     @Override

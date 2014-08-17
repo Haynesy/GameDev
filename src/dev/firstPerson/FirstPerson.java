@@ -1,32 +1,23 @@
 package dev.firstPerson;
 
 import dev.haynesy.App;
-import dev.haynesy.ui.Bitmap;
 
 /**
  * Created by NewLease on 13/08/2014.
  */
 public class FirstPerson extends App {
 
-    private Player player;
-    private Map map;
-    private Camera camera;
-    private Bitmap test;
+    private final Game game;
 
     public FirstPerson(){
-
-        width = 1440;
-        height = 900;
+        super();
+        width = 600;
+        height = 400;
         scale = 1;
-
         finalWidth = width * scale;
         finalHeight = height * scale;
 
-        map = new Map(10, 10);
-        player = new Player(1, 1, 1);
-        camera = new Camera();
-
-        test = new Bitmap("pixelart.png");
+        game = new Game();
     }
 
     public static void main(String[] args){
@@ -52,15 +43,15 @@ public class FirstPerson extends App {
 
     @Override
     public void updateScreen(){
-        camera.render(screen, player, map);
-
-        screen.render(test, 10, 10);
+        //camera.render(screen, player, map);
+        game.update(screen);
     }
 
     @Override
     public void tick(){
-        map.update();
-        player.update();
-        camera.render(screen, player, map);
+//        map.update();
+//        player.update();
+//        camera.render(screen, player, map);
+
     }
 }

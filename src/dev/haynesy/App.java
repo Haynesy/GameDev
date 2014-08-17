@@ -21,8 +21,8 @@ public class App extends Canvas implements Runnable {
     public int finalHeight;
 
     private static Thread thread;
-    private final InputHandler inputHandler;
-    protected final Bitmap screen;
+    private InputHandler inputHandler;
+    protected Bitmap screen;
     private boolean running;
     protected Random random;
 
@@ -34,17 +34,6 @@ public class App extends Canvas implements Runnable {
 
         finalWidth = width * scale;
         finalHeight = height * scale;
-
-        inputHandler = new InputHandler();
-        screen = new Bitmap(width, height);
-        random = new Random();
-
-        addMouseListener(inputHandler);
-        addMouseMotionListener(inputHandler);
-        addKeyListener(inputHandler);
-        running = true;
-
-
     }
 
     @Override
@@ -105,19 +94,28 @@ public class App extends Canvas implements Runnable {
         if(getBufferStrategy() == null)
             createBufferStrategy(3);
 
+        inputHandler = new InputHandler();
+        screen = new Bitmap(width, height);
+                random = new Random();
+
+                addMouseListener(inputHandler);
+                addMouseMotionListener(inputHandler);
+                addKeyListener(inputHandler);
+                running = true;
     }
 
     private void renderFrame() {
 
+        // Arrange render
         BufferStrategy stratedgy = getBufferStrategy();
         Graphics graphics = stratedgy.getDrawGraphics();
 
+        // Render
         graphics.clearRect(0, 0, finalWidth, finalHeight);
-
         updateScreen();
-
         graphics.drawImage(screen.image, 0, 0, finalWidth, finalHeight, null);
 
+        // Clean up
         graphics.dispose();
         stratedgy.show();
 
