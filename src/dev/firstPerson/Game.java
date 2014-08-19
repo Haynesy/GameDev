@@ -37,6 +37,7 @@ public class Game {
 
         miniMap = new MiniMap(map, 300, 300);
         player = new Player(10, 6, miniMap.cellWidth, miniMap.cellHeight);
+        miniMap.registerPlayer(player);
     }
 
     public void update(Bitmap screen){

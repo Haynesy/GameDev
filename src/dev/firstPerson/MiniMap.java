@@ -2,6 +2,8 @@ package dev.firstPerson;
 
 import dev.haynesy.ui.Bitmap;
 
+import java.util.ArrayList;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Haynesy
@@ -17,6 +19,7 @@ public class MiniMap extends Bitmap {
     private final int cellsDown;
     public final int cellWidth;
     public final int cellHeight;
+    private ArrayList<Player> players;
 
     public MiniMap(int[][] map, int width, int height) {
         super(width, height);
@@ -24,6 +27,8 @@ public class MiniMap extends Bitmap {
         this.height = height;
 
         this.map = map;
+
+        players = new ArrayList<Player>();
 
         cellsAcross = map[0].length;
         cellsDown = map.length;
@@ -49,5 +54,15 @@ public class MiniMap extends Bitmap {
                 render(block, cellWidth * x, cellHeight * y);
             }
         }
+
+        for(Player player : players){
+            render(player.image,
+                    (int) player.x * cellWidth,
+                    (int) player.y * cellHeight);
+        }
+    }
+
+    public void registerPlayer(Player player) {
+        players.add(player);
     }
 }
