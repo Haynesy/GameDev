@@ -30,7 +30,7 @@ public class Bitmap {
     public Bitmap(String filename) {
 
         try {
-            BufferedImage tempImage = ImageIO.read(new File("./resources/" + filename));
+            BufferedImage tempImage = ImageIO.read(new File("./resources/images/" + filename));
 
             this.width = tempImage.getWidth();
             this.height = tempImage.getHeight();
