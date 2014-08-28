@@ -33,7 +33,6 @@ public class App implements Runnable {
     public void run() {
         try {
             Display.setDisplayMode(new DisplayMode(width, height));
-            Display.setTitle(title);
 
             ContextAttribs context;
             if(System.getProperty("os.name").contains("Mac"))
@@ -45,6 +44,8 @@ public class App implements Runnable {
         } catch (LWJGLException e) {
 
             e.printStackTrace();
+            Display.destroy();
+            System.exit(1);
         }
 
         init();
@@ -52,7 +53,6 @@ public class App implements Runnable {
         while(running){
             
             render();
-            Display.update();
 
             if(Display.isCloseRequested())
                 running  = false;
@@ -64,10 +64,19 @@ public class App implements Runnable {
     }
 
     private void render() {
+
         glClear(GL_COLOR_BUFFER_BIT);
+        glLoadIdentity();
+
+        // Update LWJGL
+        Display.update();
+        Display.sync(60);
     }
 
     private void init() {
+        Display.setVSyncEnabled(true);
+        Display.setTitle(title);
+
         String version = glGetString(GL_VERSION);
         System.out.println("OpenGL "+ version);
 
