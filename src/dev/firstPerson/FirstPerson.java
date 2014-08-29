@@ -25,10 +25,18 @@ public class FirstPerson extends App {
         FirstPerson.start(new FirstPerson());
     }
 
+
+
     @Override
     public void updateScreen(){
         //camera.render(screen, player, map);
         game.update(screen);
+    }
+
+    @Override
+    public void handleInput(){
+
+
     }
 
     @Override

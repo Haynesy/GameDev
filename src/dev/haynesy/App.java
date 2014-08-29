@@ -21,9 +21,9 @@ public class App extends Canvas implements Runnable {
     public int finalHeight;
 
     private static Thread thread;
-    private InputHandler inputHandler;
+    protected InputHandler inputHandler;
     protected Bitmap screen;
-    private boolean running;
+    protected boolean running;
     protected Random random;
 
     public App(){
@@ -130,6 +130,12 @@ public class App extends Canvas implements Runnable {
         if(inputHandler.closed) {
             running = false;
         }
+
+        handleInput();
+    }
+
+    protected void handleInput() {
+
     }
 
     protected void tick() {

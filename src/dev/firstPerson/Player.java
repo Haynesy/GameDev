@@ -14,17 +14,23 @@ public class Player {
 
         this.x = x;
         this.y = y;
-        image = new Bitmap(width, height);
-        //player.circle(0, 0, (int) (width / 2), 0xff0000ff);
+        image = createPlayer(width, height);
+    }
+
+    private Bitmap createPlayer(int width, int height) {
+
+        Bitmap result = new Bitmap(width, height);
+
+        // TODO add player icon
+
+        return result;
     }
 
     public void draw(MiniMap miniMap){
 
-        /*
-        x pos on minimap
-        y pos on minimap
-        draw a circle for the player
+        int xPos = (int) x * miniMap.cellWidth;
+        int yPos = (int) y * miniMap.cellHeight;
 
-         */
+        miniMap.render(image, xPos, yPos);
     }
 }
