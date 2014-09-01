@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Time: 2:31 PM
  */
 public class MiniMap extends Bitmap {
-    private final int[][] map;
+
     private final int width;
     private final int[] colors;
     private final int height;
@@ -19,6 +19,7 @@ public class MiniMap extends Bitmap {
     private final int cellsDown;
     public final int cellWidth;
     public final int cellHeight;
+    public final int[][] map;
     private ArrayList<Player> players;
 
     public MiniMap(int[][] map, int width, int height) {
