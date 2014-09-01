@@ -36,13 +36,13 @@ public class Game {
         };
 
         miniMap = new MiniMap(map, 300, 300);
-        player = new Player(10, 6, miniMap.cellWidth, miniMap.cellHeight);
+        player = new Player(10, 6, miniMap.cellWidth, miniMap.cellHeight, miniMap);
         miniMap.registerPlayer(player);
     }
 
     public void update(Bitmap screen){
         miniMap.draw();
-        player.draw(miniMap);
+        player.draw();
 
         screen.render(miniMap, 0, 0);
     }
