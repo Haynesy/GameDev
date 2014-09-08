@@ -1,9 +1,13 @@
 package dev.flappyBird;
 
+import dev.flappyBird.util.ShaderUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.*;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL20.glUseProgram;
+import static org.lwjgl.opengl.GL30.glBindVertexArray;
+import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 /**
  * Created by NewLease on 26/08/2014.
@@ -50,6 +54,11 @@ public class App implements Runnable {
 
         init();
 
+        int vertexArrayObject = glGenVertexArrays();
+        glBindVertexArray(vertexArrayObject);
+        int shader = ShaderUtils.load("resources/shaders/shader.vert", "resources/shaders/shader.frag");
+        glUseProgram(shader);
+
         while(running){
             
             render();
@@ -66,7 +75,9 @@ public class App implements Runnable {
     private void render() {
 
         glClear(GL_COLOR_BUFFER_BIT);
-        glLoadIdentity();
+        //glLoadIdentity();
+
+        glDrawArrays(GL_TRIANGLES, 0 , 3);
 
         // Update LWJGL
         Display.update();
