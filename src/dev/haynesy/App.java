@@ -1,5 +1,6 @@
 package dev.haynesy;
 
+import dev.haynesy.input.Input;
 import dev.haynesy.input.InputHandler;
 import dev.haynesy.ui.Bitmap;
 import dev.haynesy.util.Print;
@@ -14,27 +15,27 @@ import java.util.Random;
  */
 public class App extends Canvas implements Runnable {
 
-    public static int WIDTH = 200;
-    public static int HEIGHT = 100;
-    public static int SCALE = 4;
-    public static int FINAL_WIDTH = WIDTH * SCALE;
-    public static int FINAL_HEIGHT = HEIGHT * SCALE;
+    public int width;
+    public int height;
+    public int scale;
+    public int finalWidth;
+    public int finalHeight;
 
     private static Thread thread;
-    private final InputHandler inputHandler;
-    private final Bitmap screen;
-    private boolean running;
-    private Random random;
+    protected InputHandler inputHandler;
+    protected Bitmap screen;
+    protected boolean running;
+    protected Random random;
+    private Input input;
 
     public App(){
-        inputHandler = new InputHandler();
-        screen = new Bitmap(WIDTH, HEIGHT);
-        random = new Random();
 
-        addMouseListener(inputHandler);
-        addMouseMotionListener(inputHandler);
-        addKeyListener(inputHandler);
-        running = true;
+        width = 200;
+        height = 100;
+        scale = 4;
+
+        finalWidth = width * scale;
+        finalHeight = height * scale;
     }
 
     @Override
@@ -45,32 +46,43 @@ public class App extends Canvas implements Runnable {
         double nsPerFrame = 1000000000.0/ 60.0;
         long currentFrameTime = System.currentTimeMillis();
         long lastFrameTime = System.nanoTime();
+        double unprocessed = 0;
 
         while(running){
 
             long now = System.nanoTime();
-            double unprocessed = (now - lastFrameTime) / nsPerFrame;
+            unprocessed += (now - lastFrameTime) / nsPerFrame;
             lastFrameTime = now;
 
-            //Print.line(""+ unprocessed);
-
-            while(unprocessed > 1)
+            while(unprocessed >= 1) {
                 unprocessed -= 1;
 
-            tick();
-            render();
+            }
 
+            updateInput();
+            tick();
+            renderFrame();
 
             frames++;
 
-            if(System.currentTimeMillis() + 1000 >= currentFrameTime){
+            if(System.currentTimeMillis() - currentFrameTime >= 1000){
 
                 Print.line("fps: "+ frames);
                 frames = 0;
                 currentFrameTime += 1000;
             }
+
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
+        close();
+    }
+
+    private void close() {
         try {
             System.exit(0);
             thread.join();
@@ -80,55 +92,79 @@ public class App extends Canvas implements Runnable {
     }
 
     private void init() {
-        setFocusable(true);
+        requestFocus();
 
-        if(getBufferStrategy() == null){
+        if(getBufferStrategy() == null)
             createBufferStrategy(3);
-        }
 
+        inputHandler = new InputHandler(this);
+        input = inputHandler.updateInput(scale);
+        screen = new Bitmap(width, height);
+        random = new Random();
+
+        running = true;
     }
 
-    private void render() {
+    private void renderFrame() {
 
+        // Arrange render
         BufferStrategy stratedgy = getBufferStrategy();
         Graphics graphics = stratedgy.getDrawGraphics();
 
-        for(int i = 0; i < screen.pixels.length; i++)
-            screen.pixels[i] = random.nextInt();
+        // Render
+        graphics.clearRect(0, 0, finalWidth, finalHeight);
+        updateScreen();
+        graphics.drawImage(screen.image, 0, 0, finalWidth, finalHeight, null);
 
-        graphics.clearRect(0, 0, FINAL_WIDTH, FINAL_HEIGHT);
-        graphics.drawImage(screen.image, 0, 0, FINAL_WIDTH, FINAL_HEIGHT, null);
-
+        // Clean up
         graphics.dispose();
         stratedgy.show();
 
     }
 
-    private void tick() {
-        if(inputHandler.closed) {
+    protected void updateScreen() {
+        for(int i = 0; i < screen.pixels.length; i++)
+            screen.pixels[i] = random.nextInt();
+    }
+
+    private void updateInput(){
+
+        input = inputHandler.updateInput(scale);
+
+        if(input.closed)
             running = false;
-        }
+
+        handleInput();
+    }
+
+    protected void handleInput() {
+
+    }
+
+    protected void tick() {
+
     }
 
     public static void main(String[] args){
         Print.line("Starting...");
 
-        App.start();
+        App.start(new App());
 
         Print.line("Done!");
     }
 
-    private static void start() {
+    protected static void start(App app) {
 
-        App app = new App();
         JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH * SCALE, HEIGHT * SCALE);
 
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(app.finalWidth, app.finalHeight);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
         frame.add(app);
         frame.setVisible(true);
-        frame.pack();
 
+        frame.pack();
         thread = new Thread(app, "App");
         thread.start();
 
