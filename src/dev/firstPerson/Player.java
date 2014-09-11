@@ -2,6 +2,8 @@ package dev.firstPerson;
 
 import dev.haynesy.ui.Bitmap;
 
+import java.util.Random;
+
 /**
  * Created by NewLease on 13/08/2014.
  */
@@ -12,7 +14,7 @@ public class Player {
     public float x, y;
     public float direction, angle, speed, movementSpeed, turnSpeed;
 
-    public Player(float x, float y, int width, int height, MiniMap miniMap){
+    public Player(float x, float y, MiniMap miniMap){
 
         this.x = x;
         this.y = y;
@@ -23,7 +25,7 @@ public class Player {
         movementSpeed = 0.1f;
         turnSpeed = (float) (4 * Math.PI / 180);
 
-        image = createPlayer(width, height);
+        image = createPlayer(miniMap.cellWidth, miniMap.cellHeight);
 
         this.miniMap = miniMap;
     }
@@ -49,9 +51,11 @@ public class Player {
 
     private Bitmap createPlayer(int width, int height) {
 
+        Random random = new Random();
         Bitmap result = new Bitmap(width, height);
 
-        // TODO add player icon
+        for(int i = 0; i < result.pixels.length; i++)
+            result.pixels[i] = random.nextInt();
 
         return result;
     }
@@ -71,8 +75,11 @@ public class Player {
         int leftBottom = miniMap.cellWidth / 2;
         int rightBottom = miniMap.cellHeight / 2;
 
-        // TODO: Render player screen projection
-        // miniMap.context.fillRect(leftTop, rightTop, leftBottom, rightBottom);
+//        Print.line("Left Top: "+ leftTop);
+//        Print.line("Right Top: "+ rightTop);
+//        Print.line("Left Bottom: "+ leftBottom);
+//        Print.line("Right Bottom: "+ rightBottom);
 
+        // TODO redner point
     }
 }

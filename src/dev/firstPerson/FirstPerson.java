@@ -35,8 +35,7 @@ public class FirstPerson extends App {
 
     @Override
     public void handleInput(){
-
-
+        game.updateInput(inputHandler);
     }
 
     @Override

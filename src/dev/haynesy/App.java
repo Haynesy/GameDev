@@ -1,5 +1,6 @@
 package dev.haynesy;
 
+import dev.haynesy.input.Input;
 import dev.haynesy.input.InputHandler;
 import dev.haynesy.ui.Bitmap;
 import dev.haynesy.util.Print;
@@ -25,6 +26,7 @@ public class App extends Canvas implements Runnable {
     protected Bitmap screen;
     protected boolean running;
     protected Random random;
+    private Input input;
 
     public App(){
 
@@ -54,6 +56,7 @@ public class App extends Canvas implements Runnable {
 
             while(unprocessed >= 1) {
                 unprocessed -= 1;
+
             }
 
             updateInput();
@@ -94,14 +97,12 @@ public class App extends Canvas implements Runnable {
         if(getBufferStrategy() == null)
             createBufferStrategy(3);
 
-        inputHandler = new InputHandler();
+        inputHandler = new InputHandler(this);
+        input = inputHandler.updateInput(scale);
         screen = new Bitmap(width, height);
-                random = new Random();
+        random = new Random();
 
-                addMouseListener(inputHandler);
-                addMouseMotionListener(inputHandler);
-                addKeyListener(inputHandler);
-                running = true;
+        running = true;
     }
 
     private void renderFrame() {
@@ -127,9 +128,11 @@ public class App extends Canvas implements Runnable {
     }
 
     private void updateInput(){
-        if(inputHandler.closed) {
+
+        input = inputHandler.updateInput(scale);
+
+        if(input.closed)
             running = false;
-        }
 
         handleInput();
     }

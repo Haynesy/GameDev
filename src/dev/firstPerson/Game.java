@@ -1,6 +1,10 @@
 package dev.firstPerson;
 
+import dev.haynesy.input.InputHandler;
 import dev.haynesy.ui.Bitmap;
+import dev.haynesy.util.Print;
+
+import java.awt.event.KeyEvent;
 
 /**
  * Created with IntelliJ IDEA.
@@ -36,11 +40,12 @@ public class Game {
         };
 
         miniMap = new MiniMap(map, 300, 300);
-        player = new Player(10, 6, miniMap.cellWidth, miniMap.cellHeight, miniMap);
+        player = new Player(10, 6, miniMap);
         miniMap.registerPlayer(player);
     }
 
     public void update(Bitmap screen){
+
         miniMap.draw();
         player.draw();
 
@@ -48,4 +53,32 @@ public class Game {
     }
 
 
+    public void updateInput(InputHandler inputHandler) {
+        Boolean hasMoved = false;
+        if(inputHandler.keys[KeyEvent.VK_W]){
+            player.y -= 1;
+            hasMoved = true;
+            inputHandler.keys[KeyEvent.VK_W] = false;
+        }
+        if(inputHandler.keys[KeyEvent.VK_S]){
+            player.y += 1;
+            hasMoved = true;
+            inputHandler.keys[KeyEvent.VK_S] = false;
+        }
+        if(inputHandler.keys[KeyEvent.VK_A]){
+            player.x -= 1;
+            hasMoved = true;
+            inputHandler.keys[KeyEvent.VK_A] = false;
+        }
+        if(inputHandler.keys[KeyEvent.VK_D]){
+            player.x += 1;
+            hasMoved = true;
+            inputHandler.keys[KeyEvent.VK_D] = false;
+        }
+        if(hasMoved){
+            player.move();
+        }
+
+        Print.line("Player ("+ player.x +", "+ player.y +")");
+    }
 }

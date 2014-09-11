@@ -12,15 +12,15 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 /**
  * Created by NewLease on 26/08/2014.
  */
-public class App implements Runnable {
+public class Flappy implements Runnable {
 
     private int width = 1280;
     private int height = 720;
-    private String title = "App 0.1.0";
+    private String title = "Flappy 0.1.0";
     private Boolean running = false;
     private Thread thread;
 
-    public App(){
+    public Flappy(){
         running = true;
         thread = new Thread(this, "App 0.1.0");
         thread.start();
@@ -28,7 +28,7 @@ public class App implements Runnable {
 
     public static void main(String[] args){
 
-        App app = new App();
+        Flappy app = new Flappy();
 
         System.out.println("Done!");
     }
@@ -36,7 +36,7 @@ public class App implements Runnable {
     @Override
     public void run() {
         try {
-            Display.setDisplayMode(new DisplayMode(width, height));
+            Display.setDisplayModeAndFullscreen(new DisplayMode(width, height));
 
             ContextAttribs context;
             if(System.getProperty("os.name").contains("Mac"))
@@ -45,6 +45,7 @@ public class App implements Runnable {
                 context = new ContextAttribs(3, 3);
 
             Display.create(new PixelFormat(), context.withProfileCore(true));
+
         } catch (LWJGLException e) {
 
             e.printStackTrace();
