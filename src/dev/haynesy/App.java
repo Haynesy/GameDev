@@ -108,8 +108,8 @@ public class App extends Canvas implements Runnable {
     private void renderFrame() {
 
         // Arrange render
-        BufferStrategy stratedgy = getBufferStrategy();
-        Graphics graphics = stratedgy.getDrawGraphics();
+        BufferStrategy strategy = getBufferStrategy();
+        Graphics graphics = strategy.getDrawGraphics();
 
         // Render
         graphics.clearRect(0, 0, finalWidth, finalHeight);
@@ -118,7 +118,7 @@ public class App extends Canvas implements Runnable {
 
         // Clean up
         graphics.dispose();
-        stratedgy.show();
+        strategy.show();
 
     }
 
