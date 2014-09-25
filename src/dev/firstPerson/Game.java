@@ -1,6 +1,6 @@
 package dev.firstPerson;
 
-import dev.haynesy.input.InputHandler;
+import dev.haynesy.input.Input;
 import dev.haynesy.ui.Bitmap;
 import dev.haynesy.util.Print;
 
@@ -53,27 +53,28 @@ public class Game {
     }
 
 
-    public void updateInput(InputHandler inputHandler) {
+    public void updateInput(Input input) {
         Boolean hasMoved = false;
-        if(inputHandler.keys[KeyEvent.VK_W]){
+
+        if(input.keys[KeyEvent.VK_W]){
             player.y -= 1;
             hasMoved = true;
-            inputHandler.keys[KeyEvent.VK_W] = false;
+            input.keys[KeyEvent.VK_W] = false;
         }
-        if(inputHandler.keys[KeyEvent.VK_S]){
+        if(input.keys[KeyEvent.VK_S]){
             player.y += 1;
             hasMoved = true;
-            inputHandler.keys[KeyEvent.VK_S] = false;
+            input.keys[KeyEvent.VK_S] = false;
         }
-        if(inputHandler.keys[KeyEvent.VK_A]){
+        if(input.keys[KeyEvent.VK_A]){
             player.x -= 1;
             hasMoved = true;
-            inputHandler.keys[KeyEvent.VK_A] = false;
+            input.keys[KeyEvent.VK_A] = false;
         }
-        if(inputHandler.keys[KeyEvent.VK_D]){
+        if(input.keys[KeyEvent.VK_D]){
             player.x += 1;
             hasMoved = true;
-            inputHandler.keys[KeyEvent.VK_D] = false;
+            input.keys[KeyEvent.VK_D] = false;
         }
         if(hasMoved){
             player.move();

@@ -14,6 +14,7 @@ public class Input {
     public boolean leftClicked, rightClicked, middleClicked;
     private boolean leftMouseButton, rightMouseButton, middleMouseButton;
     private boolean onScreen;
+    public boolean[] keys;
 
     public void update(int xMousePos, int yMousePos,
        boolean leftMouseButton, boolean rightMouseButton, boolean middleMouseButton,
@@ -28,6 +29,7 @@ public class Input {
         this.middleMouseButton = middleMouseButton;
 
         this.onScreen = onScreen;
+        this.keys = keys;
 
         if(keys[KeyEvent.VK_ESCAPE])
             closed = true;

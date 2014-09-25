@@ -26,7 +26,7 @@ public class App extends Canvas implements Runnable {
     protected Bitmap screen;
     protected boolean running;
     protected Random random;
-    private Input input;
+    protected Input input;
 
     public App(){
 
@@ -134,7 +134,6 @@ public class App extends Canvas implements Runnable {
         if(input.closed)
             running = false;
 
-        handleInput();
     }
 
     protected void handleInput() {
