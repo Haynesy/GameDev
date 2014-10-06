@@ -82,4 +82,9 @@ public class Player {
 
         // TODO redner point
     }
+
+    @Override
+    public String toString() {
+        return String.format("Position: (%d, %d)\nAngle: %f", (int)x, (int)y, angle);
+    }
 }

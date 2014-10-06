@@ -94,7 +94,7 @@ public class InputHandler implements MouseListener, MouseMotionListener, KeyList
     @Override
     public synchronized void keyReleased(KeyEvent e) {
         if (e.getKeyCode() > 0 && e.getKeyCode() < keys.length)
-            keys[e.getKeyChar()] = false;
+            keys[e.getKeyCode()] = false;
     }
 
     public synchronized Input updateInput(int scale){

@@ -27,6 +27,7 @@ public class App extends Canvas implements Runnable {
     protected boolean running;
     protected Random random;
     protected Input input;
+    private int fps;
 
     public App(){
 
@@ -56,10 +57,10 @@ public class App extends Canvas implements Runnable {
 
             while(unprocessed >= 1) {
                 unprocessed -= 1;
-
+                updateInput();
             }
 
-            updateInput();
+
             tick();
             renderFrame();
 
@@ -67,7 +68,8 @@ public class App extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - currentFrameTime >= 1000){
 
-                Print.line("fps: "+ frames);
+                //Print.line("fps: "+ frames);
+                fps = frames;
                 frames = 0;
                 currentFrameTime += 1000;
             }
@@ -116,9 +118,24 @@ public class App extends Canvas implements Runnable {
         updateScreen();
         graphics.drawImage(screen.image, 0, 0, finalWidth, finalHeight, null);
 
+        if(input.tilde.toggled) {
+            showInfo(graphics);
+        }
         // Clean up
         graphics.dispose();
         strategy.show();
+
+    }
+
+    private void showInfo(Graphics graphics) {
+        Point position = new Point(width - 100, 20);
+        String info = String.format("fps: %d", fps);
+        graphics.drawChars(info.toCharArray(), 0, info.length(), position.x, position.y);
+
+        showAppInfo(graphics, position);
+    }
+
+    protected void showAppInfo(Graphics graphics, Point position) {
 
     }
 
@@ -134,11 +151,10 @@ public class App extends Canvas implements Runnable {
         if(input.closed)
             running = false;
 
+        handleInput();
     }
 
-    protected void handleInput() {
-
-    }
+    protected void handleInput() {}
 
     protected void tick() {
 

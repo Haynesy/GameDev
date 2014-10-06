@@ -2,9 +2,6 @@ package dev.firstPerson;
 
 import dev.haynesy.input.Input;
 import dev.haynesy.ui.Bitmap;
-import dev.haynesy.util.Print;
-
-import java.awt.event.KeyEvent;
 
 /**
  * Created with IntelliJ IDEA.
@@ -54,32 +51,12 @@ public class Game {
 
 
     public void updateInput(Input input) {
-        Boolean hasMoved = false;
 
-        if(input.keys[KeyEvent.VK_W]){
-            player.y -= 1;
-            hasMoved = true;
-            input.keys[KeyEvent.VK_W] = false;
-        }
-        if(input.keys[KeyEvent.VK_S]){
-            player.y += 1;
-            hasMoved = true;
-            input.keys[KeyEvent.VK_S] = false;
-        }
-        if(input.keys[KeyEvent.VK_A]){
-            player.x -= 1;
-            hasMoved = true;
-            input.keys[KeyEvent.VK_A] = false;
-        }
-        if(input.keys[KeyEvent.VK_D]){
-            player.x += 1;
-            hasMoved = true;
-            input.keys[KeyEvent.VK_D] = false;
-        }
-        if(hasMoved){
-            player.move();
-        }
+        if(input.up.down) player.y -= 1;
+        if(input.down.down) player.y += 1;
+        if(input.left.down) player.x -= 1;
+        if(input.right.down) player.x += 1;
 
-        Print.line("Player ("+ player.x +", "+ player.y +")");
+        player.move();
     }
 }

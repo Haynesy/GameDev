@@ -46,4 +46,6 @@ public class FirstPerson extends App {
 //        camera.render(screen, player, map);
 
     }
+
+
 }
