@@ -1,4 +1,4 @@
-package dev.spikes;
+package dev.spikes.codingUnivese;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;

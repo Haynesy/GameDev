@@ -1,4 +1,4 @@
-package dev.spikes;
+package dev.spikes.codingUnivese;
 
 /**
  * Created by NewLease on 3/11/2014.

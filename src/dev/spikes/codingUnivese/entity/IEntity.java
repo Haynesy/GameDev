@@ -1,4 +1,4 @@
-package dev.spikes.entity;
+package dev.spikes.codingUnivese.entity;
 
 /**
  * Created by NewLease on 3/11/2014.

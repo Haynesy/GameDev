@@ -1,4 +1,4 @@
-package dev.spikes.entity;
+package dev.spikes.codingUnivese.entity;
 
 import java.awt.*;
 

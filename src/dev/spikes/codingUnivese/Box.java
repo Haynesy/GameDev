@@ -1,6 +1,6 @@
-package dev.spikes;
+package dev.spikes.codingUnivese;
 
-import dev.spikes.entity.MoveableEntity;
+import dev.spikes.codingUnivese.entity.MoveableEntity;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
