@@ -74,9 +74,12 @@ public class App implements Runnable {
     }
 
     private void initOpenGl() {
+
+        //glViewport(0, 0, WIDTH, HEIGHT); // Set the view port to the entire available window
         glMatrixMode(GL_PROJECTION); // Switch to projection
 
         glLoadIdentity(); // Reset
+
         glOrtho(0, WIDTH, HEIGHT, 0, 1, -1); // Set up projection
 
         glMatrixMode(GL_MODELVIEW); // Switch back to model view
@@ -116,7 +119,19 @@ public class App implements Runnable {
 
     private void render() {
 
+        renderBufferedImage();
+
+        box.draw();
+
+        if(showConsole){
+            // Show information
+        }
+    }
+
+    private void renderBufferedImage() {
         glBegin(GL_POINTS);
+
+        // Loop through all
         for(int x = 0; x < WIDTH; x++){
             for(int y = 0; y < WIDTH; y++){
                 glColor3f(random.nextFloat(), random.nextFloat(), random.nextFloat());
@@ -124,12 +139,6 @@ public class App implements Runnable {
             }
         }
         glEnd();
-
-        box.draw();
-
-        if(showConsole){
-            // Show information
-        }
     }
 
     private void input(int delta) {

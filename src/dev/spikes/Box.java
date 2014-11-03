@@ -25,22 +25,25 @@ public class Box extends MoveableEntity{
             e.printStackTrace();
             System.exit(0);
         }
+
+        // May need to stretch texture to width and height
     }
 
     @Override
     public void draw() {
         glColor3f(1.0f, 1.0f, 1.0f);
+
         texture.bind();
 
         glBegin(GL_QUADS);
         glTexCoord2f(0, 0);
-        glVertex2i((int) x, (int)y);
+        glVertex2i((int) x, (int) y);
         glTexCoord2f(0, 1);
-        glVertex2i((int)x, (int)(y + height));
+        glVertex2i((int) x, (int) (y + height));
         glTexCoord2f(1, 1);
-        glVertex2i((int)(x + width), (int) (y + height));
+        glVertex2i((int) (x + width), (int) (y + height));
         glTexCoord2f(1, 0);
-        glVertex2i((int)(x + width), (int)y);
+        glVertex2i((int) (x + width), (int) y);
         glEnd();
     }
 }
