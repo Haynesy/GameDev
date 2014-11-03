@@ -5,6 +5,7 @@ import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.newdawn.slick.Font;
 
 import java.util.Random;
 
@@ -75,15 +76,24 @@ public class App implements Runnable {
 
     private void initOpenGl() {
 
-        //glViewport(0, 0, WIDTH, HEIGHT); // Set the view port to the entire available window
+        glClearDepth(1);
+        glEnable(GL_BLEND);
+        glEnable(GL_TEXTURE_2D);
+
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glShadeModel(GL_SMOOTH);
+
+        glDisable(GL_DEPTH_TEST);
+        glDisable(GL_LIGHTING);
+
+        glViewport(0, 0, WIDTH, HEIGHT); // Set the view port to the entire available window
         glMatrixMode(GL_PROJECTION); // Switch to projection
 
         glLoadIdentity(); // Reset
-
         glOrtho(0, WIDTH, HEIGHT, 0, 1, -1); // Set up projection
 
         glMatrixMode(GL_MODELVIEW); // Switch back to model view
-        glEnable(GL_TEXTURE_2D);
+
     }
 
     public static void main(String[] args){
@@ -100,6 +110,7 @@ public class App implements Runnable {
             tick(delta);
 
             glClear(GL_COLOR_BUFFER_BIT); // | GL_DEPTH_BUFFER_BIT
+
             render();
 
             // LWJGL Update
@@ -123,12 +134,25 @@ public class App implements Runnable {
 
         box.draw();
 
+        renderText();
+
         if(showConsole){
             // Show information
         }
     }
 
+    private void renderText() {
+
+        // requires blend to be enabled and the blend function to be set
+        java.awt.Font awtFont = new java.awt.Font("Times New Roman", java.awt.Font.BOLD, 24);
+        Font font = new org.newdawn.slick.TrueTypeFont(awtFont, false);
+
+        org.newdawn.slick.Color.white.bind();
+        font.drawString(10, 10, "Foo Bar Baz", org.newdawn.slick.Color.yellow);
+    }
+
     private void renderBufferedImage() {
+
         glBegin(GL_POINTS);
 
         // Loop through all
