@@ -26,6 +26,7 @@ public class App {
     int[][] map;
     private int tileWidth, tileHeight;
     private Point hero;
+    private int mapMultiplier;
 
 
     public App(){
@@ -38,19 +39,42 @@ public class App {
     }
 
     private void initGame() {
-        map = new int[][]{
-            {1,1,1,1,1,1,1,1},
-            {1,0,0,0,0,0,0,1},
-            {1,0,1,0,0,0,0,1},
-            {1,0,0,0,0,1,0,1},
-            {1,0,0,0,0,0,0,1},
-            {1,1,1,1,1,1,1,1}};
+
+        tileWidth = 16;
+        tileHeight = 16;
+        mapMultiplier = 4;
+
+        int mapY = HEIGHT * SIZE / tileHeight * mapMultiplier;
+        int mapX = WIDTH * SIZE / tileWidth * mapMultiplier;
+
+        map = new int[mapY][mapX];
+
+        for(int y = 0; y < mapY; y++){
+            for(int x = 0; x < mapX; x++){
+
+                if(x == 0 || y == 0 || x == mapX - 1 || y == mapY - 1){
+                    map[y][x] = 1;
+                    continue;
+                }
+
+                map[y][x] = 0;
+
+            }
+        }
+
+
+//                {
+//            {1,1,1,1,1,1,1,1},
+//            {1,0,0,0,0,0,0,1},
+//            {1,0,1,0,0,0,0,1},
+//            {1,0,0,0,0,1,0,1},
+//            {1,0,0,0,0,0,0,1},
+//            {1,1,1,1,1,1,1,1}};
 
         running = true;
         title = "App 0.1.0";
 
-        tileWidth = 16;
-        tileHeight = 16;
+
 
         hero = new Point(2, 3);
     }
@@ -75,24 +99,28 @@ public class App {
 
 
         glBegin(GL_QUADS);
+
             buildMap(map);
-
-
-            int xPos = hero.x * tileWidth;
-            int yPos = hero.y * tileHeight;
-
-            glColor3f(1.0f, 0.0f, 0.0f);
-            glVertex2i(xPos, yPos);
-            glVertex2i(xPos + tileWidth, yPos);
-            glVertex2i(xPos + tileWidth, yPos + tileHeight);
-            glVertex2i(xPos, yPos + tileHeight);
+            renderHero();
 
         glEnd();
     }
 
+    private void renderHero() {
+        float xPos = (float) Math.floor(hero.x * tileWidth);
+        float yPos = (float) Math.floor(hero.y * tileHeight);
+
+        int shrink = (int) Math.floor(tileWidth / 4.0f);
+
+        glColor3f(1.0f, 0.0f, 0.0f);
+        glVertex2f(xPos + shrink, yPos + shrink);
+        glVertex2f(xPos + tileWidth - shrink, yPos + shrink);
+        glVertex2f(xPos + tileWidth - shrink, yPos + tileHeight - shrink);
+        glVertex2f(xPos + shrink, yPos + tileHeight - shrink);
+    }
+
     private void buildMap(int[][] map) {
 
-        System.out.println();
         int mapWidth = map[0].length;
         int mapHeight = map.length;
 
@@ -121,6 +149,16 @@ public class App {
         while(Keyboard.next()){
             if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
                 running = false;
+
+            if(Keyboard.isKeyDown(Keyboard.KEY_W))
+                hero.move(0, -1, map);
+            if(Keyboard.isKeyDown(Keyboard.KEY_S))
+                hero.move(0, 1, map);
+            if(Keyboard.isKeyDown(Keyboard.KEY_A))
+                hero.move(-1, 0, map);
+            if(Keyboard.isKeyDown(Keyboard.KEY_D))
+                hero.move(1, 0, map);
+
         }
     }
 
