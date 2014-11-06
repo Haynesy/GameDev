@@ -33,6 +33,12 @@ public class Specs {
 
     * */
 
+    /*
+    Cartesian Coords
+
+    x and y are the surface and z point up
+    * */
+
     public static void main(String[] args){
         System.out.printf("Gravity: %.13f", Units.GRAVITY);
     }
